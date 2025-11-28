@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JR Joias</title>
+    <!-- Carrega o Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carrega a fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones (Heroicons) -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar (opcional, para estética) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c19a6b; /* Tom dourado/bronze */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a98860;
+        }
+        /* Animação de fade-in para modais */
+        .modal-backdrop {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- ===== HEADER ===== -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo e Nome -->
+            <a href="#" class="flex items-center space-x-2">
+                <!-- NOVO LOGOTIPO: Substituído o SVG pela tag <img>. 
+                     POR FAVOR, COLOQUE A URL DA SUA IMAGEM AQUI. -->
+                <img style="background-color: black;"
+                    id="site-logo"
+                    src="Gemini_Generated_Image_y2k3pzy2k3pzy2k3 (1).png"
+                    alt="[Logotipo da Loja Eterna]"
+                    class="w-10 h-10 object-cover rounded-full shadow-md"
+                    onerror="this.src='https://placehold.co/40x40/c19a6b/ffffff?text=LOGO'"
+                >
+                <span class="text-2xl font-bold text-gray-800 tracking-tight">JR JOIAS</span>
+            </a>
+
+            <!-- Links de Navegação (Desktop) -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-yellow-700 transition duration-300">Home</a>
+                <a href="#products" class="text-gray-600 hover:text-yellow-700 transition duration-300">Alianças</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-700 transition duration-300">Sobre Nós</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-700 transition duration-300">Contato</a>
+            </div>
+
+            <!-- Ícone do Carrinho -->
+            <button id="open-cart-btn" class="relative text-gray-600 hover:text-yellow-700 transition duration-300">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007Z" />
+                </svg>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-yellow-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </button>
+            
+            <!-- Menu Hamburguer (Mobile) - não implementado por simplicidade, mas o espaço está aqui -->
+            <!-- <button class="md:hidden"> ... </button> -->
+        </nav>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- ===== HERO SECTION ===== -->
+        <section id="hero" class="relative bg-gray-800 rounded-lg shadow-xl overflow-hidden mb-16" style="height: 50vh; min-height: 400px;">
+            <img 
+                src="https://placehold.co/1200x600/333333/F5E8C7?text=O+Momento+Perfeito" 
+                alt="[Imagem de um casal de mãos dadas usando alianças]"
+                class="absolute w-full h-full object-cover opacity-50"
+                onerror="this.src='https://placehold.co/1200x600/333333/F5E8C7?text=O+Momento+Perfeito'"
+            >
+            <div class="relative h-full flex flex-col justify-center items-center text-center p-8">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">Símbolos de Amor Eterno</h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">Encontre a aliança perfeita que conta a sua história. Modelos exclusivos em ouro, prata e platina.</p>
+                <a href="#products" class="bg-yellow-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300 transform hover:scale-105">
+                    Ver Coleção
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== PRODUCTS SECTION ===== -->
+        <section id="products">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Nossas Alianças</h2>
+            <p class="text-center text-gray-600 mb-10">Feitas para celebrar cada capítulo da sua história.</p>
+            
+            <!-- Grid de Produtos -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Os produtos serão inseridos aqui pelo JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600">&copy; 2025 Eterna Alianças. Todos os direitos reservados.</p>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <a href="#" class="text-gray-500 hover:text-yellow-700">
+                    <ion-icon name="logo-instagram" class="text-2xl"></ion-icon>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-yellow-700">
+                    <ion-icon name="logo-facebook" class="text-2xl"></ion-icon>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-yellow-700">
+                    <ion-icon name="logo-whatsapp" class="text-2xl"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== MODAL DE DETALHES DO PRODUTO ===== -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center p-4 modal-backdrop hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto modal-content relative">
+            <button id="close-product-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Conteúdo do Modal -->
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <!-- Imagem do Produto -->
+                <div class="p-4">
+                    <img id="modal-product-image" src="https://placehold.co/600x600/eeeeee/cccccc?text=Alian%C3%A7a" alt="[Imagem detalhada da aliança]" class="w-full h-auto object-cover rounded-lg">
+                </div>
+                
+                <!-- Detalhes do Produto -->
+                <div class="p-6 flex flex-col justify-center">
+                    <h3 id="modal-product-name" class="text-3xl font-bold text-gray-900 mb-3">Nome do Produto</h3>
+                    <p id="modal-product-price" class="text-3xl font-light text-yellow-700 mb-4">R$ 0,00</p>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-6">
+                        <h4 class="text-sm font-semibold text-gray-500 uppercase mb-2">Descrição</h4>
+                        <p id="modal-product-desc" class="text-gray-600 leading-relaxed">Descrição detalhada do produto...</p>
+                    </div>
+
+                    <!-- Opções (Ex: Tamanho) -->
+                    <div class="mb-6">
+                        <label for="size-select" class="block text-sm font-semibold text-gray-500 uppercase mb-2">Tamanho (Aro)</label>
+                        <select id="size-select" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600">
+                            <option>Selecione</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>23</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                        </select>
+                    </div>
+
+                    <button id="modal-add-to-cart-btn" class="w-full bg-yellow-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-700 transition duration-300 transform hover:scale-105">
+                        Adicionar ao Carrinho
+                    </button>
+                    <!-- Mensagem de feedback -->
+                    <div id="modal-feedback" class="text-center text-green-600 font-medium mt-3 h-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== MODAL DO CARRINHO DE COMPRAS ===== -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-end modal-backdrop hidden">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl modal-content flex flex-col">
+            <!-- Header do Carrinho -->
+            <div class="flex justify-between items-center p-5 border-b border-gray-200">
+                <h3 class="text-2xl font-semibold text-gray-800">Seu Carrinho</h3>
+                <button id="close-cart-modal" class="text-gray-500 hover:text-gray-800">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Itens do Carrinho -->
+            <div id="cart-items" class="flex-grow p-5 overflow-y-auto space-y-4">
+                <!-- Exemplo de item (será preenchido pelo JS) -->
+                <!-- 
+                <div class="flex items-center space-x-4">
+                    <img src="https://placehold.co/100x100/eeeeee/cccccc?text=Item" alt="[Imagem do produto]" class="w-20 h-20 rounded-lg object-cover">
+                    <div class="flex-grow">
+                        <h4 class="font-semibold text-gray-800">Nome do Produto</h4>
+                        <p class="text-sm text-gray-500">Tamanho: 18</p>
+                        <p class="font-semibold text-yellow-700">R$ 1.200,00</p>
+                    </div>
+                    <button class="text-red-500 hover:text-red-700">
+                        <svg class="w-5 h-5" ...> (ícone de lixeira) </svg>
+                    </button>
+                </div>
+                -->
+                <p id="cart-empty-msg" class="text-gray-500 text-center mt-8">Seu carrinho está vazio.</p>
+            </div>
+
+            <!-- Footer do Carrinho (Total e Checkout) -->
+            <div class="p-5 border-t border-gray-200 bg-gray-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold text-gray-800">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-2xl font-bold text-yellow-700">R$ 0,00</span>
+                </div>
+                <button id="checkout-btn" class="w-full bg-yellow-600 text-white font-semibold py-3 rounded-lg shadow-md hover:bg-yellow-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Finalizar Compra
+                </button>
+                <!-- Mensagem de checkout simulado -->
+                <div id="checkout-feedback" class="text-center text-blue-600 font-medium mt-3 h-5"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== SCRIPT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ===== BANCO DE DADOS SIMULADO =====
+            const products = [
+                {
+                    id: 1,
+                    name: "Aliança Tradicional 2mm (Prata 950)",
+                    price: 99.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/tradicional-2mm.jpeg"
+                },
+                {
+                    id: 2,
+                    name: "Aliança Quadrada 2mm (Prata 950)",
+                    price: 99.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/quadrada-2mm.jpeg"
+                },
+                {
+                    id: 3,
+                    name: "Aliança Tradicional 3mm (Prata 950) (Platina)",
+                    price: 115.00,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/tradicional-3mm.jpeg"
+                },
+                {
+                    id: 4,
+                    name: "Aliança Quadrada 3mm (Prata 950)",
+                    price: 115.00,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/quadrada-3mm.jpeg"
+                },
+                {
+                    id: 5,
+                    name: "Aliança Tradicional 4mm (Prata 950)",
+                    price: 129.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/tradicional-4mm.jpeg"
+                },
+                {
+                    id: 6,
+                    name: "Aliança Quadrada 4mm (Prata 950)",
+                    price: 129.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/quadrada-4mm.jpeg"
+                },
+                {
+                    id: 7,
+                    name: "Aliança Tradicional 5mm (Prata 950)",
+                    price: 149.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/quadrada-5mm.jpeg"
+                },
+                {
+                    id: 8,
+                    name: "Aliança Quadrada 5mm (Prata 950)",
+                    price: 149.99,
+                    description: "...",
+                    image: "https://Rauflan.github.io/JrJoias/fotos-alianças/quadrada-5mm.jpeg"
+                },
+            ];
+
+            // ===== ESTADO DA APLICAÇÃO =====
+            let cart = []; // Armazena objetos { product, size, cartItemId }
+            let currentProductId = null; // Armazena o ID do produto no modal
+
+            // ===== SELETORES DO DOM =====
+            const productGrid = document.getElementById('product-grid');
+            
+            // Modal de Produto
+            const productModal = document.getElementById('product-modal');
+            const closeProductModalBtn = document.getElementById('close-product-modal');
+            const modalProductName = document.getElementById('modal-product-name');
+            const modalProductPrice = document.getElementById('modal-product-price');
+            const modalProductDesc = document.getElementById('modal-product-desc');
+            const modalProductImage = document.getElementById('modal-product-image');
+            const modalSizeSelect = document.getElementById('size-select');
+            const modalAddToCartBtn = document.getElementById('modal-add-to-cart-btn');
+            const modalFeedback = document.getElementById('modal-feedback');
+
+            // Modal do Carrinho
+            const cartModal = document.getElementById('cart-modal');
+            const openCartBtn = document.getElementById('open-cart-btn');
+            const closeCartModalBtn = document.getElementById('close-cart-modal');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartEmptyMsg = document.getElementById('cart-empty-msg');
+            const cartSubtotalEl = document.getElementById('cart-subtotal');
+            const cartCountEl = document.getElementById('cart-count');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const checkoutFeedback = document.getElementById('checkout-feedback');
+            
+
+            // ===== FUNÇÕES =====
+
+            /**
+             * Formata um número para o formato de moeda BRL.
+             * @param {number} value - O valor a ser formatado.
+             * @returns {string} - O valor formatado (ex: R$ 1.200,00).
+             */
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(value);
+            }
+
+            /**
+             * Renderiza os produtos na grade principal.
+             */
+            function renderProducts() {
+                productGrid.innerHTML = ''; // Limpa a grade
+
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'bg-white rounded-lg shadow-lg overflow-hidden transition duration-300 transform hover:scale-105 hover:shadow-xl cursor-pointer';
+                    productCard.dataset.productId = product.id; // Armazena o ID no elemento
+
+                    productCard.innerHTML = `
+                        <div class="h-64 overflow-hidden">
+                            <img src="${product.image}" alt="[Imagem da ${product.name}]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/eeeeee/cccccc?text=Imagem+N%C3%A3o+Dispon%C3%ADvel'">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2 truncate">${product.name}</h3>
+                            <p class="text-xl font-medium text-yellow-700 mb-4">${formatCurrency(product.price)}</p>
+                            <button data-product-id="${product.id}" class="add-to-cart-quick w-full bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-700 transition duration-300">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    `;
+                    productGrid.appendChild(productCard);
+                });
+            }
+
+            /**
+             * Abre o modal de detalhes do produto.
+             * @param {number} productId - O ID do produto a ser exibido.
+             */
+            function openProductModal(productId) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                currentProductId = product.id; // Armazena o ID atual
+
+                modalProductName.textContent = product.name;
+                modalProductPrice.textContent = formatCurrency(product.price);
+                modalProductDesc.textContent = product.description;
+                modalProductImage.src = product.image;
+                modalSizeSelect.value = 'Selecione'; // Reseta o select
+                modalFeedback.textContent = ''; // Limpa feedback anterior
+                productModal.classList.remove('hidden');
+            }
+
+            /**
+             * Fecha o modal de detalhes do produto.
+             */
+            function closeProductModal() {
+                productModal.classList.add('hidden');
+                currentProductId = null; // Limpa o ID
+            }
+            
+            /**
+             * Abre o modal do carrinho.
+             */
+            function openCartModal() {
+                renderCartItems();
+                cartModal.classList.remove('hidden');
+            }
+
+            /**
+             * Fecha o modal do carrinho.
+             */
+            function closeCartModal() {
+                cartModal.classList.add('hidden');
+            }
+
+            /**
+             * Adiciona um item ao carrinho.
+             * @param {number} productId - O ID do produto.
+             * @param {string} size - O tamanho selecionado.
+             */
+            function addToCart(productId, size) {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                const cartItemId = Date.now().toString(); // ID único para o item no carrinho
+                cart.push({ product, size, cartItemId });
+                
+                updateCart();
+            }
+
+            /**
+             * Remove um item do carrinho.
+             * @param {string} cartItemId - O ID único do item no carrinho.
+             */
+            function removeFromCart(cartItemId) {
+                cart = cart.filter(item => item.cartItemId !== cartItemId);
+                updateCart();
+            }
+
+            /**
+             * Atualiza o estado visual do carrinho (contador, subtotal, itens).
+             */
+            function updateCart() {
+                renderCartItems();
+                updateCartCount();
+                updateCartSubtotal();
+            }
+
+            /**
+             * Atualiza o contador de itens no ícone do carrinho.
+             */
+            function updateCartCount() {
+                cartCountEl.textContent = cart.length;
+            }
+
+            /**
+             * Calcula e exibe o subtotal do carrinho.
+             */
+            function updateCartSubtotal() {
+                const subtotal = cart.reduce((total, item) => total + item.product.price, 0);
+                cartSubtotalEl.textContent = formatCurrency(subtotal);
+                
+                // Habilita/desabilita botão de checkout
+                checkoutBtn.disabled = cart.length === 0;
+            }
+
+            /**
+             * Renderiza os itens dentro do modal do carrinho.
+             */
+            function renderCartItems() {
+                cartItemsContainer.innerHTML = ''; // Limpa
+
+                if (cart.length === 0) {
+                    cartItemsContainer.appendChild(cartEmptyMsg);
+                    cartEmptyMsg.classList.remove('hidden');
+                } else {
+                    cartEmptyMsg.classList.add('hidden');
+                    cart.forEach(item => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100';
+                        
+                        itemEl.innerHTML = `
+                            <img src="${item.product.image}" alt="[Imagem da ${item.product.name}]" class="w-16 h-16 rounded-lg object-cover border border-gray-200">
+                            <div class="flex-grow">
+                                <h4 class="font-semibold text-gray-800 text-sm">${item.product.name}</h4>
+                                <p class="text-sm text-gray-500">Tamanho: ${item.size}</p>
+                                <p class="font-semibold text-yellow-700">${formatCurrency(item.product.price)}</p>
+                            </div>
+                            <button class="remove-from-cart-btn text-red-500 hover:text-red-700" data-cart-item-id="${item.cartItemId}">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12.54 0c-.342.052-.682.107-1.022.166m11.518 0c-3.478-.397-7.04-.397-10.518 0Z" />
+                                </svg>
+                            </button>
+                        `;
+                        cartItemsContainer.appendChild(itemEl);
+                    });
+                }
+            }
+            
+            /**
+             * Simula o processo de checkout.
+             */
+            function handleCheckout() {
+                if (cart.length === 0) return;
+                
+                checkoutFeedback.textContent = 'Processando seu pedido...';
+                
+                setTimeout(() => {
+                    checkoutFeedback.textContent = 'Pedido realizado com sucesso!';
+                    cart = []; // Esvazia o carrinho
+                    updateCart();
+                    
+                    setTimeout(() => {
+                        closeCartModal();
+                        checkoutFeedback.textContent = '';
+                    }, 2000); // Fecha o modal após 2s
+                    
+                }, 1500); // Simula atraso da API
+            }
+
+
+            // ===== EVENT LISTENERS =====
+
+            // Renderiza produtos iniciais
+            renderProducts();
+            updateCart(); // Atualiza contador e subtotal inicial
+
+            // Abrir modal do produto (clicando no card ou no botão rápido)
+            productGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.bg-white.rounded-lg');
+                const quickAddBtn = e.target.closest('.add-to-cart-quick');
+                
+                if (quickAddBtn) {
+                    // Botão "Adicionar ao Carrinho" rápido
+                    e.stopPropagation(); // Impede que o clique no botão abra o modal
+                    const productId = parseInt(quickAddBtn.dataset.productId);
+                    // Adiciona com um tamanho padrão (ex: 18) ou abre o modal para seleção
+                    // Para este exemplo, vamos abrir o modal para forçar a seleção de tamanho
+                    openProductModal(productId);
+                    
+                } else if (card) {
+                    // Clicou no card (fora do botão)
+                    const productId = parseInt(card.dataset.productId);
+                    openProductModal(productId);
+                }
+            });
+
+            // Fechar modal do produto
+            closeProductModalBtn.addEventListener('click', closeProductModal);
+            productModal.addEventListener('click', (e) => {
+                // Fecha se clicar no backdrop (fundo)
+                if (e.target === productModal) {
+                    closeProductModal();
+                }
+            });
+
+            // Adicionar ao carrinho (de dentro do modal)
+            modalAddToCartBtn.addEventListener('click', () => {
+                const size = modalSizeSelect.value;
+                if (size === 'Selecione') {
+                    modalFeedback.textContent = 'Por favor, selecione um tamanho.';
+                    modalFeedback.classList.remove('text-green-600');
+                    modalFeedback.classList.add('text-red-600');
+                    return;
+                }
+                
+                addToCart(currentProductId, size);
+                
+                // Feedback visual
+                modalFeedback.textContent = 'Item adicionado com sucesso!';
+                modalFeedback.classList.remove('text-red-600');
+                modalFeedback.classList.add('text-green-600');
+
+                // Fecha o modal após um curto período
+                setTimeout(() => {
+                    closeProductModal();
+                }, 1000);
+            });
+
+            // Abrir modal do carrinho
+            openCartBtn.addEventListener('click', openCartModal);
+
+            // Fechar modal do carrinho
+            closeCartModalBtn.addEventListener('click', closeCartModal);
+            cartModal.addEventListener('click', (e) => {
+                // Fecha se clicar no backdrop (fundo)
+                if (e.target === cartModal) {
+                    closeCartModal();
+                }
+            });
+            
+            // Remover item do carrinho (delega evento ao container)
+            cartItemsContainer.addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.remove-from-cart-btn');
+                if (removeBtn) {
+                    const cartItemId = removeBtn.dataset.cartItemId;
+                    removeFromCart(cartItemId);
+                }
+            });
+            
+            // Finalizar Compra
+            checkoutBtn.addEventListener('click', handleCheckout);
+        });
+    </script>
+
+</body>
+</html>
